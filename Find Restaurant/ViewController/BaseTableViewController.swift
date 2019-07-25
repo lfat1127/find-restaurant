@@ -13,8 +13,7 @@ class BaseTableViewController: UITableViewController {
     
     // MARK: - Properties
     
-    var filteredProducts = [Restaurant]()
-    private var numberFormatter = NumberFormatter()
+    var filteredRestaurants = [Restaurant]()
     
     // MARK: - Constants
     
@@ -28,8 +27,6 @@ class BaseTableViewController: UITableViewController {
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 44
-        numberFormatter.numberStyle = .currency
-        numberFormatter.formatterBehavior = .default
         
         // Required if our subclasses are to use `dequeueReusableCellWithIdentifier(_:forIndexPath:)`.
         tableView.register(RestaurantCell.self, forCellReuseIdentifier: BaseTableViewController.tableViewCellIdentifier)
@@ -38,12 +35,7 @@ class BaseTableViewController: UITableViewController {
     // MARK: - Configuration
     
     func configureCell(_ cell: RestaurantCell, forProduct restaurant: Restaurant) {
-        
         cell.titleLabel.text = restaurant.title
-        
-        /** Build the price and year string.
-         Use NSNumberFormatter to get the currency format out of this NSNumber (product.introPrice).
-         */
         cell.detailLabel.text = restaurant.district
     }
 }

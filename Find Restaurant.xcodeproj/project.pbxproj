@@ -18,6 +18,7 @@
 		E3B454C122E7EFD600E7DE90 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B454C022E7EFD600E7DE90 /* RestaurantViewModel.swift */; };
 		E3B454C322E82B8000E7DE90 /* RestaurantCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B454C222E82B8000E7DE90 /* RestaurantCellViewModel.swift */; };
 		E3B454C622E85BF600E7DE90 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B454C522E85BF600E7DE90 /* RestaurantDetailViewController.swift */; };
+		E3B454C922E95D4700E7DE90 /* ResultsTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B454C822E95D4700E7DE90 /* ResultsTableController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		E3B454C022E7EFD600E7DE90 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		E3B454C222E82B8000E7DE90 /* RestaurantCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCellViewModel.swift; sourceTree = "<group>"; };
 		E3B454C522E85BF600E7DE90 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
+		E3B454C822E95D4700E7DE90 /* ResultsTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		E3B454B422E6FC0300E7DE90 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E3B454C722E95D3300E7DE90 /* ResultsTableVC */,
 				E3B454C422E85BDF00E7DE90 /* Restaurant Detail */,
 				E3B454B222E6FBE300E7DE90 /* SearchRestaurantViewController.swift */,
 				E3B454B522E6FC1400E7DE90 /* BaseTableViewController.swift */,
@@ -157,6 +160,14 @@
 				E3B454C522E85BF600E7DE90 /* RestaurantDetailViewController.swift */,
 			);
 			path = "Restaurant Detail";
+			sourceTree = "<group>";
+		};
+		E3B454C722E95D3300E7DE90 /* ResultsTableVC */ = {
+			isa = PBXGroup;
+			children = (
+				E3B454C822E95D4700E7DE90 /* ResultsTableController.swift */,
+			);
+			path = ResultsTableVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +287,7 @@
 				E3B454BE22E7086D00E7DE90 /* RestaurantCell.swift in Sources */,
 				E3B454C322E82B8000E7DE90 /* RestaurantCellViewModel.swift in Sources */,
 				E3B454C622E85BF600E7DE90 /* RestaurantDetailViewController.swift in Sources */,
+				E3B454C922E95D4700E7DE90 /* ResultsTableController.swift in Sources */,
 				E3B454C122E7EFD600E7DE90 /* RestaurantViewModel.swift in Sources */,
 				E3B454BA22E6FC3D00E7DE90 /* Restaurant.swift in Sources */,
 				E3B454B622E6FC1400E7DE90 /* BaseTableViewController.swift in Sources */,
