@@ -56,14 +56,11 @@ class SearchRestaurantViewController: BaseTableViewController {
             self.navigationController?.pushViewController(restaurantDetailVC, animated: true)
         }.disposed(by: disposeBag)
         
-        // Cell selected
-        Observable.zip(resultsTableController.tableView.rx.itemSelected, resultsTableController.tableView.rx.modelSelected(Restaurant.self)).bind{ (arg0) in
-            let (indexPath, restaurant) = arg0
-            self.resultsTableController.tableView.deselectRow(at: indexPath, animated: true)
+        _ = resultsTableController.restaurantSelected.subscribe(onNext: { (restaurant) in
             let restaurantDetailVC = RestaurantDetailViewController()
             restaurantDetailVC.restaurant = restaurant
             self.navigationController?.pushViewController(restaurantDetailVC, animated: true)
-            }.disposed(by: disposeBag)
+        }, onError: nil, onCompleted: nil, onDisposed: nil)
     }
     
     func bindData(){
