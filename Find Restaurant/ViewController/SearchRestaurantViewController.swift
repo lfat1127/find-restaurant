@@ -23,13 +23,14 @@ class SearchRestaurantViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.navigationController?.navigationBar.isTranslucent = false
         initialUI()
         setupRx()
         bindData()
     }
     
     func initialUI(){
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.view.backgroundColor = .white
         resultsTableController = ResultsTableController()
         searchController = UISearchController(searchResultsController: resultsTableController)
         navigationItem.searchController = searchController

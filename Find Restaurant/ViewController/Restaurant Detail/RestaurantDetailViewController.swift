@@ -30,7 +30,7 @@ class RestaurantDetailViewController: UIViewController {
     
     var restaurant:Restaurant!{
         didSet{
-            self.title = restaurant.title
+            self.title = restaurant.name
             districtLabel.text = restaurant.district
             addressLabel.text = restaurant.address
             reasonLabel.text = restaurant.reason

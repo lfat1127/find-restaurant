@@ -11,6 +11,7 @@ import RxSwift
 
 class RestaurantViewModel{
     static let shared = RestaurantViewModel()
+    let disposeBag = DisposeBag()
     
     let isLoading = BehaviorSubject<Bool>(value: false)
     let restaurants:PublishSubject<[Restaurant]> = PublishSubject()
@@ -18,22 +19,47 @@ class RestaurantViewModel{
     
     var restaurantsArr:[Restaurant] = []
     
+    let restaurantServerManager = RestaurantServerManager.shared
+    
     /// NSPredicate expression keys.
     private enum ExpressionKeys: String {
-        case title
+        case name
         case district
         case address
         case reason
     }
     
-    func reloadData(){
-        generateRestaurantData()
+    init() {
+        setupRx()
     }
     
+    func setupRx(){
+        restaurantServerManager.restaurantList.subscribe(onNext: { (data) in
+            let decoder = JSONDecoder()
+            do {
+                let latestResturantList = try decoder.decode([Restaurant].self, from:
+                    data) //Decode JSON Response Data
+                self.restaurantsArr = latestResturantList
+                self.restaurants.onNext(self.restaurantsArr)
+            }catch{
+                print(error.localizedDescription)
+                print("Fail")
+            }
+        }, onError: { (error) in
+            print(error)
+        }, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
+    }
+    
+    func reloadData(){
+        restaurantServerManager.requestRestaurantList()
+//        generateRestaurantData()
+    }
+    
+    // MARK: Test data 
     private func generateRestaurantData(){
-        restaurantsArr = [Restaurant(title: "Aascaacskacsacsmkackcascascacscascasacsaac", district: "FANLING", address: "sacaassaascca", ""),
-                          Restaurant(title: "B", district: "SHATIN", address: "asc12212e", ""),
-                          Restaurant(title: "C", district: "YEUN LONG", address: "wrbverv", "")]
+        restaurantsArr = [Restaurant(name: "Aascaacskacsacsmkackcascascacscascasacsaac", district: "FANLING", address: "sacaassaascca", ""),
+                          Restaurant(name: "B", district: "SHATIN", address: "asc12212e", ""),
+                          Restaurant(name: "C", district: "YEUN LONG", address: "wrbverv", "")]
         restaurants.onNext(restaurantsArr)
     }
     
@@ -75,7 +101,7 @@ class RestaurantViewModel{
          */
         
         // Name field matching.
-        let titleExpression = NSExpression(forKeyPath: ExpressionKeys.title.rawValue)
+        let titleExpression = NSExpression(forKeyPath: ExpressionKeys.name.rawValue)
         let searchStringExpression = NSExpression(forConstantValue: searchString)
         
         let titleSearchComparisonPredicate =

@@ -35,7 +35,7 @@ class BaseTableViewController: UITableViewController {
     // MARK: - Configuration
     
     func configureCell(_ cell: RestaurantCell, forProduct restaurant: Restaurant) {
-        cell.titleLabel.text = restaurant.title
+        cell.titleLabel.text = restaurant.name
         cell.detailLabel.text = restaurant.district
     }
 }

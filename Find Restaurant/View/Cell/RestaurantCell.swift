@@ -31,7 +31,7 @@ class RestaurantCell: UITableViewCell {
     
     public var cellRestaurant : Restaurant! {
         didSet {
-            self.titleLabel.text = cellRestaurant.title
+            self.titleLabel.text = cellRestaurant.name
             self.detailLabel.text = cellRestaurant.district
         }
     }

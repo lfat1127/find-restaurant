@@ -8,4 +8,5 @@ target 'Find Restaurant' do
   # Pods for Find Restaurant
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'Alamofire'
 end
