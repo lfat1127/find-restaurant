@@ -55,7 +55,7 @@ class RestaurantViewModel{
 //        generateRestaurantData()
     }
     
-    // MARK: Test data 
+    // MARK: Test data
     private func generateRestaurantData(){
         restaurantsArr = [Restaurant(name: "Aascaacskacsacsmkackcascascacscascasacsaac", district: "FANLING", address: "sacaassaascca", ""),
                           Restaurant(name: "B", district: "SHATIN", address: "asc12212e", ""),

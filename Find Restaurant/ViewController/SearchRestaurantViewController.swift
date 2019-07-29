@@ -31,13 +31,14 @@ class SearchRestaurantViewController: BaseTableViewController {
     func initialUI(){
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.view.backgroundColor = .white
+        self.view.backgroundColor = .white
         resultsTableController = ResultsTableController()
         searchController = UISearchController(searchResultsController: resultsTableController)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         // Search controller
-        searchController.searchResultsUpdater = self
+//        searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
     }
     
@@ -49,6 +50,7 @@ class SearchRestaurantViewController: BaseTableViewController {
             cell.cellRestaurant = restaurant
         }.disposed(by: disposeBag)
         
+        //tableview cell selected
         Observable.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(Restaurant.self)).bind { (arg0) in
             let (indexPath, restaurant) = arg0
             self.tableView.deselectRow(at: indexPath, animated: true)
@@ -57,25 +59,21 @@ class SearchRestaurantViewController: BaseTableViewController {
             self.navigationController?.pushViewController(restaurantDetailVC, animated: true)
         }.disposed(by: disposeBag)
         
+        //Search result table cell selected
         _ = resultsTableController.restaurantSelected.subscribe(onNext: { (restaurant) in
             let restaurantDetailVC = RestaurantDetailViewController()
             restaurantDetailVC.restaurant = restaurant
             self.navigationController?.pushViewController(restaurantDetailVC, animated: true)
         }, onError: nil, onCompleted: nil, onDisposed: nil)
+        
+        //Searchbar text on change
+        let searchBar:UISearchBar = searchController.searchBar
+        searchBar.rx.text.orEmpty.subscribe(onNext: { (searchString) in
+            self.restaurantViewModel.findMatch(searchString: searchString)
+        }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
     }
     
     func bindData(){
         restaurantViewModel.reloadData()
-    }
-}
-
-// MARK: - UISearchResultsUpdating
-
-extension SearchRestaurantViewController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchString = searchController.searchBar.text{
-            restaurantViewModel.findMatch(searchString: searchString)
-        }
     }
 }
