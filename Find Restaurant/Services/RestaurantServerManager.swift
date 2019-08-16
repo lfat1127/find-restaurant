@@ -19,13 +19,15 @@ class RestaurantServerManager {
             if response.result.isSuccess{
                 if let data = response.data{
                     self.restaurantList.onNext(data)
+                    print("HI")
+//                    self.restaurantList.onCompleted()
                 }
             }else{
                 if let error = response.result.error{
                     self.restaurantList.onError(error)
                 }else{
                     let unknownerror = NSError(domain: "requestRestaurantList", code: -999, userInfo: nil)
-                 self.restaurantList.onError(unknownerror)
+                    self.restaurantList.onError(unknownerror)
                 }
             }
         }

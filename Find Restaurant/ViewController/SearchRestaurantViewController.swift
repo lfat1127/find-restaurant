@@ -20,6 +20,9 @@ class SearchRestaurantViewController: BaseTableViewController {
     let restaurantViewModel = RestaurantViewModel.shared
     let disposeBag = DisposeBag()
     
+    let refreshSubject = PublishSubject<Void>()
+    let refresh = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -40,6 +43,12 @@ class SearchRestaurantViewController: BaseTableViewController {
         // Search controller
 //        searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
+        self.extendedLayoutIncludesOpaqueBars = true
+        
+        
+        self.tableView.refreshControl = refresh
+//        refresh.addTarget(self, action: #selector(pulledToRefresh), for: .valueChanged)
+        
     }
     
     func setupRx(){
@@ -49,6 +58,18 @@ class SearchRestaurantViewController: BaseTableViewController {
         restaurantViewModel.restaurants.bind(to: tableView.rx.items(cellIdentifier: BaseTableViewController.tableViewCellIdentifier, cellType: RestaurantCell.self)){ (row, restaurant, cell) in
             cell.cellRestaurant = restaurant
         }.disposed(by: disposeBag)
+        
+        refresh.rx.controlEvent(.valueChanged)
+            .map{_ in !self.refresh.isRefreshing}
+            .subscribe(onNext: { [unowned self] _ in
+                self.refreshRestaurantList()
+            }).disposed(by: disposeBag)
+        
+        refresh.rx.controlEvent(.valueChanged)
+            .map{_ in self.refresh.isRefreshing}
+            .subscribe(onNext: { [unowned self] _ in
+                self.refresh.endRefreshing()
+            }).disposed(by: disposeBag)
         
         //tableview cell selected
         Observable.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(Restaurant.self)).bind { (arg0) in
@@ -74,6 +95,14 @@ class SearchRestaurantViewController: BaseTableViewController {
     }
     
     func bindData(){
+        refreshRestaurantList()
+    }
+    
+    func refreshRestaurantList(){
         restaurantViewModel.reloadData()
+    }
+    
+    @objc func pulledToRefresh(){
+        refreshRestaurantList()
     }
 }

@@ -47,7 +47,9 @@ class RestaurantViewModel{
             }
         }, onError: { (error) in
             print(error)
-        }, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
+        }, onCompleted: {
+            print("Completed")
+        }, onDisposed: nil).disposed(by: disposeBag)
     }
     
     func reloadData(){
